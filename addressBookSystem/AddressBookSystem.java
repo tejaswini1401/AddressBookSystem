@@ -23,7 +23,8 @@ public class AddressBookSystem {
             System.out.println("2. Select Address Book");
             System.out.println("3. Search Contacts by City/State");
             System.out.println("4. View Contacts by City/State");
-            System.out.println("5. Exit");
+            System.out.println("5. Count Contacts by City/State");
+            System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); 
@@ -42,7 +43,9 @@ public class AddressBookSystem {
                     viewContactsByCityOrState();
                     break;
                 case 5:
-                    System.out.println("Exiting...");
+                    countContactsByCityOrState();
+                    break;
+                case 6:
                     return;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -79,7 +82,8 @@ public class AddressBookSystem {
             System.out.println("2. Display Contacts");
             System.out.println("3. Edit Contact");
             System.out.println("4. Delete Contact");
-            System.out.println("5. Back to Main Menu");
+            System.out.println("5. Count Contacts by City/State");
+            System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); 
@@ -98,6 +102,10 @@ public class AddressBookSystem {
                     deleteContact(addressBook);
                     break;
                 case 5:
+                    countContactsByCityOrState();
+                    break;
+                case 6:
+                    System.out.println("Exiting...");
                     return;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -212,5 +220,46 @@ public class AddressBookSystem {
         } else {
             result.forEach(System.out::println);
         }
+    }
+    
+    private void countContactsByCityOrState() {
+        System.out.println("1. Count Contacts by City");
+        System.out.println("2. Count Contacts by State");
+        System.out.print("Enter your choice: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (choice) {
+            case 1:
+                countContactsByCity();
+                break;
+            case 2:
+                countContactsByState();
+                break;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+        }
+    }
+
+    private void countContactsByCity() {
+        System.out.print("Enter City to count contacts: ");
+        String city = scanner.nextLine();
+
+        long count = addressBooks.values().stream()
+                .flatMap(addressBook -> addressBook.getContactsByCity(city).stream())
+                .count();
+
+        System.out.println("Number of contacts in city '" + city + "': " + count);
+    }
+
+    private void countContactsByState() {
+        System.out.print("Enter State to count contacts: ");
+        String state = scanner.nextLine();
+
+        long count = addressBooks.values().stream()
+                .flatMap(addressBook -> addressBook.getContactsByState(state).stream())
+                .count();
+
+        System.out.println("Number of contacts in state '" + state + "': " + count);
     }
 }
