@@ -82,6 +82,33 @@ public class AddressBook {
         sortedContacts.forEach(System.out::println);
     }
     
+    public void sortContactsByCity() {
+        List<Contact> sortedContacts = contacts.stream()
+                .sorted(Comparator.comparing(Contact::getCity))
+                .collect(Collectors.toList());
+
+        System.out.println("Contacts sorted by City:");
+        sortedContacts.forEach(System.out::println);
+    }
+
+    public void sortContactsByState() {
+        List<Contact> sortedContacts = contacts.stream()
+                .sorted(Comparator.comparing(Contact::getState))
+                .collect(Collectors.toList());
+
+        System.out.println("Contacts sorted by State:");
+        sortedContacts.forEach(System.out::println);
+    }
+
+    public void sortContactsByZip() {
+        List<Contact> sortedContacts = contacts.stream()
+                .sorted(Comparator.comparing(Contact::getZip))
+                .collect(Collectors.toList());
+
+        System.out.println("Contacts sorted by Zip:");
+        sortedContacts.forEach(System.out::println);
+    }
+    
     public Collection<Contact> getContacts() {
         return contacts;
     }
