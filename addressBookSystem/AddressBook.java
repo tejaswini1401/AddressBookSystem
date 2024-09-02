@@ -4,19 +4,28 @@ import java.util.*;
 
 public class AddressBook {
 
-    private Set<Contact> contacts;
+	private List<Contact> contacts;
+    private Map<String, List<Contact>> cityContactMap;
+    private Map<String, List<Contact>> stateContactMap;
 
     public AddressBook() {
-        contacts = new HashSet<>();
+        contacts = new ArrayList<>();
+        cityContactMap = new HashMap<>();
+        stateContactMap = new HashMap<>();
     }
 
     public void addContact(Contact contact) {
-        if (contacts.contains(contact)) {
-            System.out.println("Duplicate contact found. Cannot add.");
-        } else {
-            contacts.add(contact);
-            System.out.println("Contact added successfully.");
-        }
+        contacts.add(contact);
+        addToCityMap(contact);
+        addToStateMap(contact);
+    }
+
+    private void addToCityMap(Contact contact) {
+        cityContactMap.computeIfAbsent(contact.getCity(), k -> new ArrayList<>()).add(contact);
+    }
+
+    private void addToStateMap(Contact contact) {
+        stateContactMap.computeIfAbsent(contact.getState(), k -> new ArrayList<>()).add(contact);
     }
 
     public boolean editContact(String firstName, String lastName) {
@@ -61,16 +70,21 @@ public class AddressBook {
         }
         return false;
     }
+    
+    public Collection<Contact> getContacts() {
+        return contacts;
+    }
+
+    public List<Contact> getContactsByCity(String city) {
+        return cityContactMap.getOrDefault(city, Collections.emptyList());
+    }
+
+    public List<Contact> getContactsByState(String state) {
+        return stateContactMap.getOrDefault(state, Collections.emptyList());
+    }
 
     public void printContacts() {
-        if (contacts.isEmpty()) {
-            System.out.println("No contacts available.");
-            return;
-        }
         contacts.forEach(System.out::println);
     }
 
-    public Set<Contact> getContacts() {
-        return contacts;
-    }
 }
