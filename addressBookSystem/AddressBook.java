@@ -11,7 +11,12 @@ public class AddressBook {
     }
 
     public void addContact(Contact contact) {
-        contacts.add(contact);
+        if (contacts.contains(contact)) {
+            System.out.println("Duplicate contact found. Cannot add.");
+        } else {
+            contacts.add(contact);
+            System.out.println("Contact added successfully.");
+        }
     }
 
     public boolean editContact(String firstName, String lastName) {
@@ -62,8 +67,10 @@ public class AddressBook {
             System.out.println("No contacts available.");
             return;
         }
-        for (Contact contact : contacts) {
-            System.out.println(contact);
-        }
+        contacts.forEach(System.out::println);
+    }
+
+    public Set<Contact> getContacts() {
+        return contacts;
     }
 }
