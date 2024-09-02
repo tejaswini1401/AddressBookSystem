@@ -1,6 +1,7 @@
 package com.addressBookSystem;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressBook {
 
@@ -69,6 +70,16 @@ public class AddressBook {
             }
         }
         return false;
+    }
+    
+    public void sortContactsByName() {
+        List<Contact> sortedContacts = contacts.stream()
+                .sorted(Comparator.comparing(Contact::getFirstName)
+                        .thenComparing(Contact::getLastName))
+                .collect(Collectors.toList());
+
+        System.out.println("Contacts sorted alphabetically by name:");
+        sortedContacts.forEach(System.out::println);
     }
     
     public Collection<Contact> getContacts() {

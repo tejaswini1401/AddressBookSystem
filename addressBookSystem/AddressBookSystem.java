@@ -46,6 +46,7 @@ public class AddressBookSystem {
                     countContactsByCityOrState();
                     break;
                 case 6:
+                    System.out.println("Exiting...");
                     return;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -82,8 +83,8 @@ public class AddressBookSystem {
             System.out.println("2. Display Contacts");
             System.out.println("3. Edit Contact");
             System.out.println("4. Delete Contact");
-            System.out.println("5. Count Contacts by City/State");
-            System.out.println("6. Exit");
+            System.out.println("5. Sort Contacts by Name");
+            System.out.println("6. Back to Main Menu");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); 
@@ -102,11 +103,11 @@ public class AddressBookSystem {
                     deleteContact(addressBook);
                     break;
                 case 5:
-                    countContactsByCityOrState();
+                    addressBook.sortContactsByName();
                     break;
                 case 6:
-                    System.out.println("Exiting...");
-                    return;
+                	return;
+ 
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
